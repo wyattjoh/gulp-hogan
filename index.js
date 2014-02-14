@@ -2,12 +2,14 @@
 var map = require('map-stream');
 var es = require('event-stream');;
 var gutil = require('gulp-util');
-var Hogan = require('hogan.js');
+var Hogan = require('hulkster');
 
 module.exports = function(data) {
   data = data || {};
   return es.map(function (file, cb) {
-    file.contents = new Buffer( Hogan.compile(file.contents.toString()).render(data) );
+    var compiled = hulkster.compile(file.path, {minify: 'true'});
+
+    file.contents = new Buffer( compiled.template );
     file.path = gutil.replaceExtension(file.path, '.js');
     cb(null,file);
   });
