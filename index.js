@@ -7,7 +7,7 @@ var Hogan = require('hulkster');
 module.exports = function(data) {
   data = data || {};
   return es.map(function (file, cb) {
-    var compiled = hulkster.compile(file.path, {minify: 'true'});
+    var compiled = Hogan.compile(file.path, {minify: 'true'});
 
     file.contents = new Buffer( compiled.template );
     file.path = gutil.replaceExtension(file.path, '.js');
